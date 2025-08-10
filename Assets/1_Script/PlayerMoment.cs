@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,20 +8,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private InputActionReference _jumpAction;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private Transform _cameraTransform;
 
     private float _velocityY;
-
     private Vector2 _currentSmoothedMoveInput;
 
-    public bool IsMoving => _currentSmoothedMoveInput.magnitude > 0.01f;
-
-    [SerializeField] private float _layerWeightSmoothSpeed = 5f;
-
-    private float _currentShootRunLayerWeight = 0f;
-    private float _targetShootRunLayerWeight = 0f;
-
-    private float _currentReloadRunLayerWeight = 0f;
-    private float _targetReloadRunLayerWeight = 0f;
+    public bool IsMoving => _currentSmoothedMoveInput.magnitude > 0.1f;
 
     private Animator animator;
 
@@ -34,12 +26,28 @@ public class PlayerMovement : MonoBehaviour
     {
         var rawInput = _moveAction.action.ReadValue<Vector2>();
 
+        // Smooth input
         _currentSmoothedMoveInput.x = Mathf.Lerp(_currentSmoothedMoveInput.x, rawInput.x, Time.deltaTime * 10f);
         _currentSmoothedMoveInput.y = Mathf.Lerp(_currentSmoothedMoveInput.y, rawInput.y, Time.deltaTime * 10f);
 
-        var direction = transform.forward * rawInput.y + transform.right * rawInput.x;
+        // Gửi vào Animator
+        animator.SetFloat("Pox X", _currentSmoothedMoveInput.x);
+        animator.SetFloat("Pox Y", _currentSmoothedMoveInput.y);
+        animator.SetBool("IsMoving", IsMoving);
+
+        // Tính hướng di chuyển theo camera
+        Vector3 camForward = _cameraTransform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Vector3 camRight = _cameraTransform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        var direction = camForward * rawInput.y + camRight * rawInput.x;
         var newVelocity = direction * _moveSpeed;
 
+        // Nhảy
         if (_jumpAction.action.triggered && _controller.isGrounded)
         {
             _velocityY = _jumpForce;
@@ -47,13 +55,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             UpdateFalling();
-        }       
-        
+        }
 
         newVelocity.y = _velocityY;
         _controller.Move(newVelocity * Time.deltaTime);
     }
-
 
     private void UpdateFalling()
     {

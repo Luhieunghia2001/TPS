@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72192ae64c611b645b08f9b5ac91e02b, type: 3}
-  m_Name: AttackItem1
+  m_Name: AttackItem6 1
   m_EditorClassIdentifier: 
-  itemName: "T\u0103ng m\xE1u"
+  itemName: "T\u0103ng gi\u1EDBi h\u1EA1n \u0111\u1EA1n "
   itemMota: "Ph\u1ED5 bi\u1EBFn trong AR, \u0111\u1ED9 ch\xEDnh x\xE1c t\u1ED1t"
-  itemIcon: {fileID: 21300000, guid: b5eeedaa73f56334a8829db7ba8ad414, type: 3}
-  bonusHeal: 10.73
-  bonusAmor: 1.2
-  bonusSpeed: 1
+  itemIcon: {fileID: 21300000, guid: f143398933776c14f88dfb577129bc5d, type: 3}
+  bonusHeal: 0
+  bonusAmor: 0
+  bonusSpeed: 0
   bonusCooldown: 0
   bonusMagazineSize: 0
-  bonusTotalAmmo: 0
+  bonusTotalAmmo: 1015

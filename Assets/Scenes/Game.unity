@@ -979,7 +979,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05957419, y: 0.00044489207, z: -0.000026551246, w: 0.99822384}
+  m_LocalRotation: {x: 0.05957418, y: 0.00044476884, z: -0.000026543888, w: 0.99822384}
   m_LocalPosition: {x: 15.41, y: 3.09, z: -4.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1875,7 +1875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595733811}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.059574194, y: 0.00044489207, z: -0.00002655124, w: 0.9982238}
+  m_LocalRotation: {x: 0.059574183, y: 0.00044476884, z: -0.000026543885, w: 0.9982238}
   m_LocalPosition: {x: 15.41, y: 3.09, z: -4.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8049,7 +8049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _cooldown: 1
+  _cooldown: 0.5
   currentAmmo: 0
   magazineSize: 618
   totalAmmo: 44444

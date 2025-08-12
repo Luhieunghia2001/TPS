@@ -15,6 +15,7 @@ public class CanvasPlayerManager : MonoBehaviour
     private PlayerStats playerStats;
 
     public TextMeshProUGUI Ammo;
+    public Image AmmoBar;
 
 
     private void Start()
@@ -55,8 +56,10 @@ public class CanvasPlayerManager : MonoBehaviour
 
 
 
-    public void UpdateUI(int currentAmmo, int totalAmmo)
+    public void UpdateUI(int currentAmmo, int totalAmmo, int magazineSize)
     {
+        float fillAmount = (float)currentAmmo / magazineSize;
+        AmmoBar.fillAmount = fillAmount;
         Ammo.text = $"{currentAmmo} / {totalAmmo}";
     }
 

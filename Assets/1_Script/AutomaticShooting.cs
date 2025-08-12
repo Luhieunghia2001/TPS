@@ -18,7 +18,7 @@ public class AutomaticShooting : MonoBehaviour
 
     [SerializeField] private GunRaycasting _gunRaycasting;
 
-    public UnityEvent<int, int> OnAmmoChanged;
+    public UnityEvent<int, int, int> OnAmmoChanged;
 
     private float _lastShotTime;
 
@@ -38,7 +38,7 @@ public class AutomaticShooting : MonoBehaviour
     private void Start()
     {
         currentAmmo = magazineSize;
-        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
 
         animator = GetComponent<Animator>();
 
@@ -66,7 +66,7 @@ public class AutomaticShooting : MonoBehaviour
     public void AddAmmo()
     {
         totalAmmo += 500;
-        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
 
     }
 
@@ -84,7 +84,7 @@ public class AutomaticShooting : MonoBehaviour
     void DesBullet()
     {
         currentAmmo--;
-        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
         if (currentAmmo == 0)
         {
             Fire = false;
@@ -127,7 +127,7 @@ public class AutomaticShooting : MonoBehaviour
             .StopReload();
         isReloading = false;
         Fire = true;
-        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
     }
 
     private bool FinishCooldown() => Time.time - _lastShotTime >= _cooldown;
@@ -149,6 +149,6 @@ public class AutomaticShooting : MonoBehaviour
             _cooldown = 0;
         }
 
-        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
     }
 }

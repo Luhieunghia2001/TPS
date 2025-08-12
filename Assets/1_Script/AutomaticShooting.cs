@@ -123,7 +123,8 @@ public class AutomaticShooting : MonoBehaviour
             totalAmmo = 0;
         }
 
-        _gunAnimationController.StopReload();
+        _gunAnimationController
+            .StopReload();
         isReloading = false;
         Fire = true;
         OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
@@ -135,5 +136,19 @@ public class AutomaticShooting : MonoBehaviour
     {
         OnShoot.Invoke();
         _gunRaycasting.PerformRaycast();
+    }
+
+    public void ApplyItemBonus(float bonusCooldown, int bonusMagazineSize, int bonusTotalAmmo)
+    {
+        _cooldown -= bonusCooldown;
+        magazineSize += bonusMagazineSize;
+        totalAmmo += bonusTotalAmmo;
+
+        if (_cooldown < 0)
+        {
+            _cooldown = 0;
+        }
+
+        OnAmmoChanged?.Invoke(currentAmmo, totalAmmo);
     }
 }

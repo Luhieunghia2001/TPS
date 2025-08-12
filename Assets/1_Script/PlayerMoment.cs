@@ -5,10 +5,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputActionReference _moveAction;
     [SerializeField] private CharacterController _controller;
-    [SerializeField] private float _moveSpeed;
     [SerializeField] private InputActionReference _jumpAction;
     [SerializeField] private float _jumpForce;
     [SerializeField] private Transform _cameraTransform;
+
+    private float _currentMoveSpeed;
 
     private float _velocityY;
     private Vector2 _currentSmoothedMoveInput;
@@ -20,10 +21,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
     }
 
     private void Update()
     {
+        _currentMoveSpeed = PlayerStats.Instance.PlayerData.Speed;
+
+
         var rawInput = _moveAction.action.ReadValue<Vector2>();
 
         // Smooth input
@@ -45,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         camRight.Normalize();
 
         var direction = camForward * rawInput.y + camRight * rawInput.x;
-        var newVelocity = direction * _moveSpeed;
+        var newVelocity = direction * _currentMoveSpeed;
 
         // Nhảy
         if (_jumpAction.action.triggered && _controller.isGrounded)

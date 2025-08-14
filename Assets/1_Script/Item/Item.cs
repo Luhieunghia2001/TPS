@@ -8,6 +8,7 @@ public class Item : ScriptableObject
     public Sprite itemIcon;
 
     [Header("Stat bonus")]
+    public float bounusDamage;
     public float bonusHeal;
     public float bonusAmor;
     public float bonusSpeed;

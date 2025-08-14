@@ -7,7 +7,8 @@ public class DataPlayer
     public int expTotal;
     public int expCurrent;
     public float maxHeal;
-    public float currentHeal; 
+    public float currentHeal;
+    public float damage;
     public float Amor;
     public float Speed;
 }
@@ -46,6 +47,7 @@ public class PlayerStats : MonoBehaviour
             PlayerData.expCurrent = 0;
             PlayerData.maxHeal = 1000;
             PlayerData.currentHeal = PlayerData.maxHeal;
+            PlayerData.damage = 10;
             PlayerData.Amor = 10;
             PlayerData.Speed = 5f;
 

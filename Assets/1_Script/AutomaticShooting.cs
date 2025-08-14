@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class AutomaticShooting : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class AutomaticShooting : MonoBehaviour
 
     [SerializeField] private GunRaycasting _gunRaycasting;
 
+
     public UnityEvent<int, int, int> OnAmmoChanged;
 
     private float _lastShotTime;
@@ -27,13 +29,17 @@ public class AutomaticShooting : MonoBehaviour
     public bool Fire = true;
 
     public bool IsShooting => isShooting && currentAmmo > 0 && Fire && !isReloading;
-
     public bool IsReloading => isReloading;
 
     private Animator animator;
-
     private GunAnimationController _gunAnimationController;
 
+    [SerializeField] private CinemachineRotationComposer _rotationComposer;
+
+    [SerializeField] private float targetYWhenShooting = 0.7f;
+    [SerializeField] private float normalY = 0.5f;
+    [SerializeField] private float yChangeSpeed = 3f;
+    private float _lastRecoilTime;
 
     private void Start()
     {
@@ -41,13 +47,38 @@ public class AutomaticShooting : MonoBehaviour
         OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
 
         animator = GetComponent<Animator>();
-
         _gunAnimationController = GetComponent<GunAnimationController>();
     }
 
     private void Update()
     {
         isShooting = _shootAction.action.IsPressed();
+
+        if (_rotationComposer != null)
+        {
+            var comp = _rotationComposer.Composition;
+
+            if (isShooting && Fire && currentAmmo > 0 && !isReloading)
+            {
+                if (Time.time - _lastRecoilTime >= _cooldown && FinishCooldown())
+                {
+                    comp.ScreenPosition.y += 0.05f;
+                    comp.ScreenPosition.y = Mathf.Clamp(comp.ScreenPosition.y, normalY, targetYWhenShooting);
+
+                    _lastRecoilTime = Time.time;
+                }
+                else
+                {
+                    comp.ScreenPosition.y = Mathf.Lerp(comp.ScreenPosition.y, normalY, Time.deltaTime * yChangeSpeed);
+                }
+            }
+            else
+            {
+                comp.ScreenPosition.y = Mathf.Lerp(comp.ScreenPosition.y, normalY, Time.deltaTime * yChangeSpeed);
+            }
+
+            _rotationComposer.Composition = comp;
+        }
 
         Shooting();
 
@@ -59,7 +90,6 @@ public class AutomaticShooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reload();
-
         }
     }
 
@@ -67,7 +97,6 @@ public class AutomaticShooting : MonoBehaviour
     {
         totalAmmo += 500;
         OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
-
     }
 
     private void Shooting()
@@ -97,21 +126,18 @@ public class AutomaticShooting : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(ReloadCoroutine()); 
+        StartCoroutine(ReloadCoroutine());
     }
 
     private IEnumerator ReloadCoroutine()
     {
         isReloading = true;
-
         Fire = false;
 
         _gunAnimationController.Reload();
-
         yield return new WaitForSeconds(reloadTime);
 
         int neededAmmo = magazineSize - currentAmmo;
-
         if (totalAmmo >= neededAmmo)
         {
             currentAmmo += neededAmmo;
@@ -123,8 +149,7 @@ public class AutomaticShooting : MonoBehaviour
             totalAmmo = 0;
         }
 
-        _gunAnimationController
-            .StopReload();
+        _gunAnimationController.StopReload();
         isReloading = false;
         Fire = true;
         OnAmmoChanged?.Invoke(currentAmmo, totalAmmo, magazineSize);
@@ -135,7 +160,8 @@ public class AutomaticShooting : MonoBehaviour
     private void Shoot()
     {
         OnShoot.Invoke();
-        _gunRaycasting.PerformRaycast();
+        float damageFromPlayerStats = PlayerStats.Instance.PlayerData.damage;
+        _gunRaycasting.PerformRaycast(damageFromPlayerStats);
     }
 
     public void ApplyItemBonus(float bonusCooldown, int bonusMagazineSize, int bonusTotalAmmo)

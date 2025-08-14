@@ -5,9 +5,8 @@ public class GunRaycasting : MonoBehaviour
     [SerializeField] private Transform _firingPos;
     [SerializeField] private Transform _aimingCamera;
     [SerializeField] private Transform _hitMarkerPrefab;
-    [SerializeField] private int _damage;
 
-    public void PerformRaycast()
+    public void PerformRaycast(float damage)
     {
         Ray aimingRay = new(_aimingCamera.position, _aimingCamera.forward);
 
@@ -19,6 +18,19 @@ public class GunRaycasting : MonoBehaviour
 
             if (Physics.Raycast(firingRay, out var firingHit))
             {
+                Debug.Log("Firing ray hit: " + firingHit.collider.name);
+
+                var zombieHealth = firingHit.collider.GetComponentInParent<ZomebieHeal>();
+                if (zombieHealth != null)
+                {
+                    Debug.Log("Found ZomebieHeal component on: " + firingHit.collider.name);
+                    zombieHealth.TakeDamage(damage);
+                }
+                else
+                {
+                    Debug.LogWarning("Could not find ZomebieHeal component on: " + firingHit.collider.name);
+                }
+
                 var hitMarker = Instantiate(
                     _hitMarkerPrefab,
                     firingHit.point,

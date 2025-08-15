@@ -26,10 +26,6 @@ public class GunRaycasting : MonoBehaviour
                     Debug.Log("Found ZomebieHeal component on: " + firingHit.collider.name);
                     zombieHealth.TakeDamage(damage);
                 }
-                else
-                {
-                    Debug.LogWarning("Could not find ZomebieHeal component on: " + firingHit.collider.name);
-                }
 
                 var hitMarker = Instantiate(
                     _hitMarkerPrefab,

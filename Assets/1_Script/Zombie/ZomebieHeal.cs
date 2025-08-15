@@ -23,9 +23,8 @@ public class ZomebieHeal : MonoBehaviour
 
         if (_currentHeal <= 0)
         {
-            Debug.Log("Zombie is dead.");
+            Debug.Log("Zombie dead.");
 
-            // Dừng AI trước khi gọi ragdoll
             if (zombieAI != null)
             {
                 zombieAI.SetDead();
@@ -34,10 +33,6 @@ public class ZomebieHeal : MonoBehaviour
             if (zombieRagdoll != null)
             {
                 zombieRagdoll.Die();
-            }
-            else
-            {
-                Debug.LogError("Lỗi: Không tìm thấy component ZombieRagdoll!");
             }
         }
     }

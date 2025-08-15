@@ -66,7 +66,7 @@ public class ItemManager : MonoBehaviour
             if (selectedItem != null)
             {
                 PlayerStats.Instance.ApplyBonusStats(selectedItem);
-                Debug.Log($"Đã chọn item: {selectedItem.itemName}. Tăng máu: {selectedItem.bonusHeal}");
+                Debug.Log($"Đã chọn item: {selectedItem.itemName}. Tăng: {selectedItem.bonusHeal}");
 
                 AutomaticShooting automaticShooting = FindFirstObjectByType<AutomaticShooting>();
                 if (automaticShooting != null)

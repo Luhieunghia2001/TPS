@@ -37,6 +37,11 @@ public class ItemDisplay : MonoBehaviour
                 System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
 
                 //bonus Stats
+                if(itemDisplay.bounusDamage > 0)
+                {
+                    statsBuilder.AppendLine($"Tăng sát thương: +{itemDisplay.bounusDamage}");
+
+                }
                 if (itemDisplay.bonusHeal > 0)
                 {
                     statsBuilder.AppendLine($"Tăng máu: +{itemDisplay.bonusHeal}");

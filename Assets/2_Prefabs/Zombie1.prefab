@@ -3229,7 +3229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5772023043290863035}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.99971867, z: -0, w: 0.023721166}
+  m_LocalRotation: {x: 0, y: -0.9997188, z: 0, w: 0.023716895}
   m_LocalPosition: {x: 90.52, y: 1.85, z: -80.01}
   m_LocalScale: {x: 1.3376368, y: 1.3376368, z: 1.3376368}
   m_ConstrainProportionsScale: 0
@@ -3283,7 +3283,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 5.85
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3320,9 +3320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd285e5ea45b28542a4406e29f24fd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  chaseDistance: 15
+  target: {fileID: 0}
+  chaseDistance: 100
   attackDistance: 2
+  attackDamage: 10
 --- !u!114 &2254475565967656199
 MonoBehaviour:
   m_ObjectHideFlags: 0

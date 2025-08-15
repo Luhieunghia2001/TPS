@@ -26,12 +26,6 @@ public class ItemGroupEditorWindow : EditorWindow
         // Bắt đầu một group để chứa nút và label
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Select an Item", EditorStyles.boldLabel);
-
-        // Nút để tạo Item mới
-        if (GUILayout.Button("Create New Item", GUILayout.Width(150)))
-        {
-            CreateNewItem();
-        }
         EditorGUILayout.EndHorizontal();
 
         if (_itemGroup.items.Count == 0)
@@ -85,6 +79,7 @@ public class ItemGroupEditorWindow : EditorWindow
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Player Stats", EditorStyles.boldLabel);
+            _selectedItem.bounusDamage = EditorGUILayout.FloatField("Tăng sát thương", _selectedItem.bounusDamage);
             _selectedItem.bonusHeal = EditorGUILayout.FloatField("Tăng máu:", _selectedItem.bonusHeal);
             _selectedItem.bonusAmor = EditorGUILayout.FloatField("Tăng giáp:", _selectedItem.bonusAmor);
             _selectedItem.bonusSpeed = EditorGUILayout.FloatField("Tăng tốc độ:", _selectedItem.bonusSpeed);
@@ -103,36 +98,4 @@ public class ItemGroupEditorWindow : EditorWindow
         }
     }
 
-    private void CreateNewItem()
-    {
-        // Tạo một instance mới của ScriptableObject Item
-        Item newItem = ScriptableObject.CreateInstance<Item>();
-        newItem.itemName = "New Item";
-
-        // Lấy đường dẫn của ItemGroup
-        string path = AssetDatabase.GetAssetPath(_itemGroup);
-        if (string.IsNullOrEmpty(path))
-        {
-            path = "Assets";
-        }
-
-        // Tạo đường dẫn mới cho Item
-        string newPath = AssetDatabase.GenerateUniqueAssetPath(path.Replace(".asset", "") + "/" + newItem.itemName + ".asset");
-
-        // Lưu Item mới vào Project
-        AssetDatabase.CreateAsset(newItem, newPath);
-
-        // Thêm Item vào danh sách của ItemGroup
-        _itemGroup.items.Add(newItem);
-
-        // Đánh dấu ItemGroup và Item mới là "dirty" để lưu thay đổi
-        EditorUtility.SetDirty(_itemGroup);
-        EditorUtility.SetDirty(newItem);
-
-        // Hiển thị và chọn Item mới trong Project view
-        EditorGUIUtility.PingObject(newItem);
-
-        // Cập nhật lại cửa sổ
-        Repaint();
-    }
 }

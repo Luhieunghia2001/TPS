@@ -1,46 +1,57 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class ZombieAI : MonoBehaviour
 {
-    public Transform player;
     public float chaseDistance = 15f;
     public float attackDistance = 2f;
+    public float attackDamage = 10f;
+    public float targetUpdateInterval = 0.5f;
 
     private NavMeshAgent agent;
     private Animator animator;
-    private bool isDead = false; 
+    private bool isDead = false;
+
+    private Transform target;
+    private Rook rookScript;
+
+    private IEnumerator findTargetCoroutine;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        if (player == null)
-        {
-            GameObject p = GameObject.FindWithTag("Player");
-            if (p != null) player = p.transform;
-        }
+        findTargetCoroutine = FindTargetRoutine();
+        StartCoroutine(findTargetCoroutine);
     }
 
     void Update()
     {
         if (isDead) return;
 
-        if (player == null) return;
-
-        float distance = Vector3.Distance(transform.position, player.position);
-
-        if (distance <= chaseDistance)
+        if (target != null)
         {
-            agent.isStopped = false;
-            agent.SetDestination(player.position);
-            animator.SetBool("isWalking", true);
+            float distance = Vector3.Distance(transform.position, target.position);
 
-            if (distance <= attackDistance)
+            if (distance <= chaseDistance)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(target.position);
+                animator.SetBool("isWalking", true);
+
+                if (distance <= attackDistance)
+                {
+                    agent.isStopped = true;
+                    animator.SetTrigger("Attack");
+                    Attack();
+                }
+            }
+            else
             {
                 agent.isStopped = true;
-                animator.SetTrigger("Attack");
+                animator.SetBool("isWalking", false);
             }
         }
         else
@@ -50,11 +61,76 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
+    private IEnumerator FindTargetRoutine()
+    {
+        while (!isDead)
+        {
+            FindClosestTarget();
+            yield return new WaitForSeconds(targetUpdateInterval);
+        }
+    }
+
+    private void FindClosestTarget()
+    {
+        GameObject[] rooks = GameObject.FindGameObjectsWithTag("Rook");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        GameObject closestTargetObject = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject rook in rooks)
+        {
+            float distance = Vector3.Distance(transform.position, rook.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTargetObject = rook;
+            }
+        }
+
+        foreach (GameObject player in players)
+        {
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTargetObject = player;
+            }
+        }
+
+        if (closestTargetObject != null)
+        {
+            target = closestTargetObject.transform;
+            if (closestTargetObject.CompareTag("Rook"))
+            {
+                rookScript = closestTargetObject.GetComponent<Rook>();
+            }
+            else
+            {
+                rookScript = null;
+            }
+        }
+        else
+        {
+            target = null;
+            rookScript = null;
+        }
+    }
+
     public void SetDead()
     {
         isDead = true;
         agent.isStopped = true;
         animator.SetBool("isWalking", false);
-        animator.enabled = false; 
+        animator.enabled = false;
+        StopCoroutine(findTargetCoroutine);
+    }
+
+    public void Attack()
+    {
+        if (rookScript != null)
+        {
+            rookScript.TakeDamage(attackDamage);
+        }
     }
 }

@@ -62,7 +62,7 @@ public class PlayerStats : MonoBehaviour
     public void ApplyBonusStats(Item item)
     {
         if (item == null) return;
-
+        PlayerData.damage += item.bounusDamage;
         PlayerData.maxHeal += item.bonusHeal;
         PlayerData.Amor += item.bonusAmor;
         PlayerData.Speed += item.bonusSpeed;

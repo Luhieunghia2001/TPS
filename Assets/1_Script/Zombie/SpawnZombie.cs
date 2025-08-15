@@ -4,23 +4,55 @@ public class SpawnZombie : MonoBehaviour
 {
     [SerializeField] private GameObject _zombiePrefab;
     [SerializeField] private Transform[] _spawnPoints;
-    [SerializeField] private int _zombieCount;
-    [SerializeField] private int _zombieTotal;
 
-    private float _spawnInterval = 3f;
-    private float _timer;
+    [SerializeField] private float _normalWaveDuration = 60f;
+    [SerializeField] private float _fastWaveDuration = 30f;
+    [SerializeField] private float _normalSpawnInterval = 3f;
+    [SerializeField] private float _fastSpawnInterval = 1f;
+
+    [SerializeField] private Animator _waveAnimator;
+    
+    private string _isFastWaveAnimBool = "IsFastWave";
+
+    private float _waveTimer;
+    private float _spawnTimer;
+    private bool _isFastWave = false;
+
+    void Start()
+    {
+        _waveTimer = 0;
+        _spawnTimer = 0;
+        if (_waveAnimator != null)
+        {
+            _waveAnimator.SetBool(_isFastWaveAnimBool, _isFastWave);
+        }
+    }
 
     void Update()
     {
-        if (_zombieCount < _zombieTotal)
-        {
-            _timer += Time.deltaTime;
+        _waveTimer += Time.deltaTime;
 
-            if (_timer >= _spawnInterval)
+        float currentWaveDuration = _isFastWave ? _fastWaveDuration : _normalWaveDuration;
+
+        if (_waveTimer >= currentWaveDuration)
+        {
+            _isFastWave = !_isFastWave;
+            _waveTimer = 0;
+
+            if (_waveAnimator != null)
             {
-                SpawnRandomZombie();
-                _timer = 0;
+                _waveAnimator.SetBool(_isFastWaveAnimBool, _isFastWave);
             }
+        }
+
+        _spawnTimer += Time.deltaTime;
+
+        float currentSpawnInterval = _isFastWave ? _fastSpawnInterval : _normalSpawnInterval;
+
+        if (_spawnTimer >= currentSpawnInterval)
+        {
+            SpawnRandomZombie();
+            _spawnTimer = 0;
         }
     }
 
@@ -32,7 +64,6 @@ public class SpawnZombie : MonoBehaviour
             Transform randomSpawnPoint = _spawnPoints[randomIndex];
 
             Instantiate(_zombiePrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
-            _zombieCount++;
         }
     }
 }

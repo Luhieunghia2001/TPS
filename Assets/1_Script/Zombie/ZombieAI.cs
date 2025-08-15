@@ -15,6 +15,7 @@ public class ZombieAI : MonoBehaviour
 
     private Transform target;
     private Rook rookScript;
+    private PlayerStats playerStats;
 
     private IEnumerator findTargetCoroutine;
 
@@ -104,16 +105,24 @@ public class ZombieAI : MonoBehaviour
             if (closestTargetObject.CompareTag("Rook"))
             {
                 rookScript = closestTargetObject.GetComponent<Rook>();
+                playerStats = null;
+            }
+            else if (closestTargetObject.CompareTag("Player"))
+            {
+                playerStats = closestTargetObject.GetComponent<PlayerStats>();
+                rookScript = null;
             }
             else
             {
                 rookScript = null;
+                playerStats = null;
             }
         }
         else
         {
             target = null;
             rookScript = null;
+            playerStats = null;
         }
     }
 
@@ -131,6 +140,10 @@ public class ZombieAI : MonoBehaviour
         if (rookScript != null)
         {
             rookScript.TakeDamage(attackDamage);
+        }
+        else if (playerStats != null)
+        {
+            playerStats.TakeDamage(attackDamage);
         }
     }
 }

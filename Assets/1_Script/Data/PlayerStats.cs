@@ -20,6 +20,10 @@ public class PlayerStats : MonoBehaviour
 
     public DataPlayer PlayerData;
 
+    private ItemPanelOpener itemShop;
+
+    private Animator ani;
+
     private void Awake()
     {
         if(Instance == null)
@@ -36,6 +40,10 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        itemShop = FindFirstObjectByType<ItemPanelOpener>();
+
+        ani = GetComponent<Animator>();
+
         PlayerData = SaveLoadManager.LoadData();
 
 
@@ -59,6 +67,30 @@ public class PlayerStats : MonoBehaviour
 
     }
 
+    public void AddEXP()
+    {
+        Debug.Log("Exp +");
+        PlayerData.expCurrent += 10;
+        LevelUP();
+    }
+
+    void LevelUP()
+    {
+        if(PlayerData.expCurrent >= PlayerData.expTotal)
+        {
+            PlayerData.Level += 1;
+            PlayerData.expCurrent = 0;
+            PlayerData.expTotal += 50;
+
+            itemShop.OpenItemSelectionPanel();
+
+            ToggleCursor.Instance.ToggleCursorLock();
+
+
+        }
+
+    }
+
     public void ApplyBonusStats(Item item)
     {
         if (item == null) return;
@@ -73,6 +105,28 @@ public class PlayerStats : MonoBehaviour
         }
 
         SavaData();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        float actualDamage = damage - PlayerData.Amor;
+
+        if (actualDamage < 1)
+        {
+            actualDamage = 1;
+        }
+
+        PlayerData.currentHeal -= actualDamage;
+        if (PlayerData.currentHeal <= 0)
+        {
+            ani.Play("Die");
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject, 4f);
     }
 
     public void SavaData()

@@ -38,7 +38,6 @@ public class Rook : MonoBehaviour
             _currentHeal = 0;
         }
 
-        Debug.Log("Rook received " + damage + " damage. Current heal: " + _currentHeal);
 
         UpdateUI(); 
         GameOver(); 

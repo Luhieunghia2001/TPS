@@ -5,6 +5,7 @@ public class GunRaycasting : MonoBehaviour
     [SerializeField] private Transform _firingPos;
     [SerializeField] private Transform _aimingCamera;
     [SerializeField] private Transform _hitMarkerPrefab;
+    [SerializeField] private Transform _hitZombiePrefab;
 
     public void PerformRaycast(float damage)
     {
@@ -18,28 +19,33 @@ public class GunRaycasting : MonoBehaviour
 
             if (Physics.Raycast(firingRay, out var firingHit))
             {
-                Debug.Log("Firing ray hit: " + firingHit.collider.name);
-
-                var zombieHealth = firingHit.collider.GetComponentInParent<ZomebieHeal>();
-                if (zombieHealth != null)
+                if (firingHit.collider.CompareTag("Zombie"))
                 {
-                    Debug.Log("Found ZomebieHeal component on: " + firingHit.collider.name);
-                    zombieHealth.TakeDamage(damage);
+                    var zombieHealth = firingHit.collider.GetComponentInParent<ZomebieHeal>();
+                    if (zombieHealth != null)
+                    {
+                        zombieHealth.TakeDamage(damage);
+                    }
+
+                    var hitZombie = Instantiate(
+                        _hitZombiePrefab,
+                        firingHit.point,
+                        Quaternion.LookRotation(firingHit.normal),
+                        firingHit.collider.transform
+                    );
+                    hitZombie.localScale /= firingHit.collider.transform.lossyScale.x;
                 }
-
-                var hitMarker = Instantiate(
-                    _hitMarkerPrefab,
-                    firingHit.point,
-                    Quaternion.LookRotation(firingHit.normal),
-                    firingHit.collider.transform
-                );
-                hitMarker.localScale /= firingHit.collider.transform.lossyScale.x;
-
-                
-
-
+                else
+                {
+                    var hitMarker = Instantiate(
+                        _hitMarkerPrefab,
+                        firingHit.point,
+                        Quaternion.LookRotation(firingHit.normal),
+                        firingHit.collider.transform
+                    );
+                    hitMarker.localScale /= firingHit.collider.transform.lossyScale.x;
+                }
             }
         }
     }
 }
-    

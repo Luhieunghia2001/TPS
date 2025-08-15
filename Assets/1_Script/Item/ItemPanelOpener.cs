@@ -7,6 +7,7 @@ public class ItemPanelOpener : MonoBehaviour
 
     public void OpenItemSelectionPanel()
     {
+
         if (itemManager != null && itemManager.allAvailableItems.Count > 0)
         {
             List<Item> itemsToDisplay = GetRandomItems(3);

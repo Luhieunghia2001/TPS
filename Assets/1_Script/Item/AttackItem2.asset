@@ -15,8 +15,9 @@ MonoBehaviour:
   itemName: "Tang c\xF4ng "
   itemMota: "Ph\u1ED5 bi\u1EBFn trong AR, \u0111\u1ED9 ch\xEDnh x\xE1c t\u1ED1t"
   itemIcon: {fileID: 21300000, guid: 4e53f21e6fcd5534bb504e5c1152a864, type: 3}
+  bounusDamage: 0
   bonusHeal: 7.87
-  bonusAmor: 13.51
+  bonusAmor: 105.66
   bonusSpeed: 0
   bonusCooldown: 0
   bonusMagazineSize: 0

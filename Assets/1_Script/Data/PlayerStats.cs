@@ -29,7 +29,6 @@ public class PlayerStats : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -80,11 +79,14 @@ public class PlayerStats : MonoBehaviour
         {
             PlayerData.Level += 1;
             PlayerData.expCurrent = 0;
-            PlayerData.expTotal += 50;
+            PlayerData.expTotal += 5; //:D
 
             itemShop.OpenItemSelectionPanel();
 
             ToggleCursor.Instance.ToggleCursorLock();
+
+            ToggleCursor.Instance.ToggleCursorLock();
+
 
 
         }
@@ -127,6 +129,7 @@ public class PlayerStats : MonoBehaviour
     void Die()
     {
         Destroy(gameObject, 4f);
+        EndGame.Instance.OnLosePanel();
     }
 
     public void SavaData()

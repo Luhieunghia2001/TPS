@@ -48,6 +48,12 @@ public class Rook : MonoBehaviour
         if(_currentHeal<=0)
         {
             Debug.Log("You lose");
+
+            EndGame.Instance.OnLosePanel();
+
+            ToggleCursor.Instance.ToggleCursorLock();
+
+
         }
     }
 

@@ -22,6 +22,8 @@ public class AutomaticShooting : MonoBehaviour
 
     public UnityEvent<int, int, int> OnAmmoChanged;
 
+    public UnityEvent OnReload;
+
     private float _lastShotTime;
 
     public UnityEvent OnShoot;
@@ -133,6 +135,8 @@ public class AutomaticShooting : MonoBehaviour
     {
         isReloading = true;
         Fire = false;
+
+        OnReload?.Invoke();
 
         _gunAnimationController.Reload();
         yield return new WaitForSeconds(reloadTime);

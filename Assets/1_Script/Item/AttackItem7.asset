@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72192ae64c611b645b08f9b5ac91e02b, type: 3}
   m_Name: AttackItem7
   m_EditorClassIdentifier: 
-  itemName: "T\u0103ng s\xE1t th\u01B0\u01A1ng"
-  itemMota: "Ph\u1ED5 bi\u1EBFn trong AR, \u0111\u1ED9 ch\xEDnh x\xE1c t\u1ED1t"
-  itemIcon: {fileID: 21300000, guid: f143398933776c14f88dfb577129bc5d, type: 3}
-  bounusDamage: 46.84
+  itemName: "S\xE1t th\u01B0\u01A1ng +"
+  itemMota: "T\u0103ng s\xE1t th\u01B0\u01A1ng g\xE2y ra "
+  itemIcon: {fileID: 21300000, guid: 2337e49fd719bb343a8e97e9c3e96b71, type: 3}
+  bounusDamage: 10
   bonusHeal: 0
   bonusAmor: 0
   bonusSpeed: 0
   bonusCooldown: 0
-  bonusMagazineSize: 0
+  bonusMagazineSize: 10
   bonusTotalAmmo: 0

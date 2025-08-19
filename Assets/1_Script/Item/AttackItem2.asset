@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72192ae64c611b645b08f9b5ac91e02b, type: 3}
   m_Name: AttackItem2
   m_EditorClassIdentifier: 
-  itemName: "Tang c\xF4ng "
-  itemMota: "Ph\u1ED5 bi\u1EBFn trong AR, \u0111\u1ED9 ch\xEDnh x\xE1c t\u1ED1t"
-  itemIcon: {fileID: 21300000, guid: 4e53f21e6fcd5534bb504e5c1152a864, type: 3}
+  itemName: "T\u0103ng th\u1EE7 +"
+  itemMota: "C\u01B0\u1EDDng h\xF3a gi\xE1p "
+  itemIcon: {fileID: 21300000, guid: bd6c2181895110043a11540e9b717833, type: 3}
   bounusDamage: 0
-  bonusHeal: 7.87
-  bonusAmor: 105.66
+  bonusHeal: 20
+  bonusAmor: 2
   bonusSpeed: 0
   bonusCooldown: 0
   bonusMagazineSize: 0

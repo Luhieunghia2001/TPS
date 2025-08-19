@@ -87,7 +87,7 @@ public class ItemGroupEditorWindow : EditorWindow
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Weapon Stats", EditorStyles.boldLabel);
-            _selectedItem.bonusCooldown = EditorGUILayout.FloatField("Giảm hồi chiêu:", _selectedItem.bonusCooldown);
+            _selectedItem.bonusCooldown = EditorGUILayout.FloatField("Tăng tốc độ bắn::", _selectedItem.bonusCooldown);
             _selectedItem.bonusMagazineSize = EditorGUILayout.IntField("Tăng băng đạn:", _selectedItem.bonusMagazineSize);
             _selectedItem.bonusTotalAmmo = EditorGUILayout.IntField("Tăng tổng đạn:", _selectedItem.bonusTotalAmmo);
 

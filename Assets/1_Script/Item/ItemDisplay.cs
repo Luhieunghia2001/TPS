@@ -61,7 +61,7 @@ public class ItemDisplay : MonoBehaviour
                 //bounus Gun
                 if (itemDisplay.bonusCooldown > 0)
                 {
-                    statsBuilder.AppendLine($"Giảm thời gian hồi chiêu: +{itemDisplay.bonusCooldown}");
+                    statsBuilder.AppendLine($"Tăng tốc độ bắn: +{itemDisplay.bonusCooldown}");
                 }
 
                 if (itemDisplay.bonusMagazineSize > 0)

@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SpawnZombie : MonoBehaviour
 {
@@ -11,7 +13,11 @@ public class SpawnZombie : MonoBehaviour
     [SerializeField] private float _fastSpawnInterval = 1f;
 
     [SerializeField] private Animator _waveAnimator;
-    
+
+    [SerializeField] private AudioSource _audioSource; 
+    [SerializeField] private AudioClip _normalWaveSound; 
+    [SerializeField] private AudioClip _fastWaveSound;   
+
     private string _isFastWaveAnimBool = "IsFastWave";
 
     private float _waveTimer;
@@ -22,9 +28,15 @@ public class SpawnZombie : MonoBehaviour
     {
         _waveTimer = 0;
         _spawnTimer = 0;
+
         if (_waveAnimator != null)
         {
             _waveAnimator.SetBool(_isFastWaveAnimBool, _isFastWave);
+        }
+
+        if (_audioSource != null && _normalWaveSound != null)
+        {
+            _audioSource.PlayOneShot(_normalWaveSound);
         }
     }
 
@@ -42,6 +54,22 @@ public class SpawnZombie : MonoBehaviour
             if (_waveAnimator != null)
             {
                 _waveAnimator.SetBool(_isFastWaveAnimBool, _isFastWave);
+            }
+
+            if (_audioSource != null)
+            {
+                if (_isFastWave && _fastWaveSound != null)
+                {
+                    _audioSource.PlayOneShot(_fastWaveSound);
+                }
+                else
+                {
+                    _audioSource.Stop(); 
+                    if (_normalWaveSound != null)
+                    {
+                        _audioSource.PlayOneShot(_normalWaveSound);
+                    }
+                }
             }
         }
 

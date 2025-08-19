@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72192ae64c611b645b08f9b5ac91e02b, type: 3}
   m_Name: AttackItem5
   m_EditorClassIdentifier: 
-  itemName: "T\u0103ng b\u0103ng \u0111\u1EA1n "
-  itemMota: "Ph\u1ED5 bi\u1EBFn trong AR, \u0111\u1ED9 ch\xEDnh x\xE1c t\u1ED1t"
-  itemIcon: {fileID: 21300000, guid: 3000d7717acbaff43aff99c2ee8ad59a, type: 3}
+  itemName: "B\u0103ng \u0111\u1EA1n +"
+  itemMota: "T\u0103ng b\u0103n \u0111\u1EA1n cho s\xFAng "
+  itemIcon: {fileID: 21300000, guid: 74fc375f95e48db44ac43ed73ed061a9, type: 3}
+  bounusDamage: 0
   bonusHeal: 0
   bonusAmor: 0
   bonusSpeed: 0
   bonusCooldown: 0
-  bonusMagazineSize: 226
+  bonusMagazineSize: 50
   bonusTotalAmmo: 0

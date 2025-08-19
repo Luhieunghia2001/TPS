@@ -16583,7 +16583,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " \n5. ESC: m\u1EDF c\xE0i \u0111\u1EB7t."
+  m_text: " \n5. ESC: m\u1EDF c\xE0i \u0111\u1EB7t.\n6. R: N\u1EA1p \u0111\u1EA1n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -46148,7 +46148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c8d9ce77f42b14ea8051fbf4c9dc39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHeal: 10000
+  _maxHeal: 100000
   _currentHeal: 0
   healText: {fileID: 813693529}
   healBar: {fileID: 978208100}
